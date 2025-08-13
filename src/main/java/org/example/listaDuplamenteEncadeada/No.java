@@ -1,4 +1,4 @@
-package org.example;
+package org.example.listaDuplamenteEncadeada;
 
 public class No {
     private No ant;

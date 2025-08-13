@@ -1,10 +1,10 @@
-package org.example;
+package org.example.listaDuplamenteEncadeada;
 
 public class Lista {
     private No inicio;
     private No fim;
 
-    Lista() {
+    public Lista() {
         this.inicio = null;
         this.fim = null;
     }
