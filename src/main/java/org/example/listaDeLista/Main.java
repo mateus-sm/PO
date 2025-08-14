@@ -17,9 +17,20 @@ public class Main {
         l.inserirCidade("Paraná", "Londrina");
         l.inserirCidade("Paraná", "Arapongas");
         //l.inserirEstadoCidade("Teste", "teste");
-        l.exibir();
+        //l.exibir();
+
         l.ordenarEstados();
-        System.out.println();
         l.exibir();
+
+        //l.ordenarCidade(l.buscaEstado("São Paulo"));
+        l.ordenarCidades();
+        l.exibir();
+
+        l.listarCidades(l.buscaEstado("São Paulo"));
+
+        String estado = "São Paulo";
+        String cidade = "Marília";
+        boolean bool = l.verifica(estado, cidade);
+        System.out.printf("A dupla: %s, %s. %s", estado, cidade, bool ? "Existe" : "Não Existe");
     }
 }

@@ -53,7 +53,7 @@ public class Lista {
 
             aux = aux.getProx();
         }
-
+        System.out.println();
     }
 
     public void inserirCidade(String alvo, String info) {
@@ -90,7 +90,7 @@ public class Lista {
 
     //Ordenar as Listas de Estado e as listas de Cidades;
     public void ordenarEstados() {
-        Estado at = this.inicio;
+        Estado at;
         Estado ant;
         String str;
         Cidade aux;
@@ -118,4 +118,81 @@ public class Lista {
             }
         }
     }
+
+    public void ordenarCidade(Estado no) {
+        Cidade cid = no.getCid();
+        Cidade at, ant;
+        String str;
+        boolean flag = true;
+
+        while(flag) {
+            at = cid;
+            flag = false;
+
+            while (at.getProx() != null) {
+                ant = at;
+                at = at.getProx();
+
+                if(at.getNome().compareToIgnoreCase(ant.getNome()) < 0) {
+                    str = at.getNome();
+                    at.setNome(ant.getNome());
+                    ant.setNome(str);
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    public void ordenarCidades() {
+        Estado aux = this.inicio;
+
+        while (aux != null) {
+            ordenarCidade(aux);
+            aux = aux.getProx();
+        }
+    }
+
+    //Buscar um Estado retornando o endereço do nodo, ou null caso não
+    //encontre;
+    public Estado buscaEstado(String nome) {
+        Estado aux = this.inicio;
+
+        while (aux != null && !aux.getNome().equals(nome)) {
+            aux = aux.getProx();
+        }
+
+        return aux;
+    }
+
+    public Cidade buscaCidade(Estado est, String cidade) {
+        Cidade cid = est.getCid();
+
+        while (cid != null && !cid.getNome().equals(cidade)) {
+            cid = cid.getProx();
+        }
+
+        return cid;
+    }
+
+    //Listar todas as Cidades de um determinado Estado;
+    public void listarCidades(Estado no) {
+        Cidade cid = no.getCid();
+
+        System.out.println("Cidades em " + no.getNome());
+        if (cid != null) {
+            System.out.print("\t* ");
+            while (cid.getProx() != null) {
+                System.out.printf("%s -> ", cid.getNome());
+                cid = cid.getProx();
+            }
+            System.out.println(cid.getNome());
+        }
+    }
+
+    //Verificar se um par Estado,Cidade está inserido nas Listas, retornando
+    //  um boolean (True/False).
+    public boolean verifica(String est, String cidade) {
+        return buscaCidade(buscaEstado(est), cidade) != null;
+    }
+
 }
