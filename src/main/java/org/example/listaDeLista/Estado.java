@@ -3,12 +3,12 @@ package org.example.listaDeLista;
 public class Estado {
     private String nome;
     private Estado prox;
-    private Cidade cid;
+    private ListaCidade listaCid;
 
-    public Estado(String nome, Estado prox, Cidade cid) {
+    public Estado(String nome, Estado prox, ListaCidade listaCid) {
         this.nome = nome;
         this.prox = prox;
-        this.cid = cid;
+        this.listaCid = listaCid;
     }
 
     public Estado() {
@@ -30,11 +30,11 @@ public class Estado {
         this.prox = prox;
     }
 
-    public Cidade getCid() {
-        return cid;
+    public ListaCidade getListaCid() {
+        return listaCid;
     }
 
-    public void setCid(Cidade cid) {
-        this.cid = cid;
+    public void setListaCid(ListaCidade listaCid) {
+        this.listaCid = listaCid;
     }
 }

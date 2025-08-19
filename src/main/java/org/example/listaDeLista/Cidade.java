@@ -4,7 +4,7 @@ public class Cidade {
     private Cidade prox;
     private String nome;
 
-    public Cidade(Cidade prox, Cidade sub, String nome) {
+    public Cidade(Cidade prox, String nome) {
         this.prox = prox;
         this.nome = nome;
     }

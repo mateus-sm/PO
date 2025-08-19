@@ -2,26 +2,30 @@ package org.example.listaDeLista;
 
 public class Main {
     public static void main(String[] args) {
-        Lista l = new Lista();
+        ListaEstado l = new ListaEstado();
+        ListaCidade listaCid;
 
-        l.inserirEstado("Santa Catarina");
-        l.inserirEstado("Paraná");
         l.inserirEstado("São Paulo");
-        l.inserirCidade("São Paulo", "Pres. Pudente");
-        l.inserirCidade("São Paulo", "Marília");
-        l.inserirCidade("São Paulo", "Assis");
-        l.inserirCidade("Santa Catarina", "Joinville");
-        l.inserirCidade("Santa Catarina", "Blumenal");
-        l.inserirCidade("Paraná", "Maringá");
-        l.inserirCidade("Paraná", "Apucarana");
-        l.inserirCidade("Paraná", "Londrina");
-        l.inserirCidade("Paraná", "Arapongas");
-        //l.inserirEstadoCidade("Teste", "teste");
+        l.inserirEstadoCidade("São Paulo", "Pres. Pudente");
+        listaCid = l.buscaEstado("São Paulo").getListaCid();
+        listaCid.inserirCidade("Marília");
+        listaCid.inserirCidade("Assis");
+
+        l.inserirEstadoCidade("Paraná", "Maringá");
+        listaCid = l.buscaEstado("Paraná").getListaCid();
+        listaCid.inserirCidade("Apucarana");
+        listaCid.inserirCidade("Londrina");
+        listaCid.inserirCidade("Arapongas");
+
+        l.inserirEstadoCidade("Santa Catarina", "Joinville");
+        l.buscaEstado("Santa Catarina").getListaCid().inserirCidade("Blumenal");
         //l.exibir();
 
+        System.out.println("Ordenando Estados:");
         l.ordenarEstados();
         l.exibir();
 
+        System.out.println("Ordenando Cidades:");
         //l.ordenarCidade(l.buscaEstado("São Paulo"));
         l.ordenarCidades();
         l.exibir();

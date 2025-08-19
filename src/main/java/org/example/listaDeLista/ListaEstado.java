@@ -1,14 +1,18 @@
 package org.example.listaDeLista;
 
-public class Lista {
+public class ListaEstado {
     private Estado inicio;
 
-    public Lista() {
+    public ListaEstado(Estado inicio) {
+        this.inicio = inicio;
+    }
+
+    public ListaEstado() {
         this.inicio = null;
     }
 
     public void inicializar() {
-        this.inicio = null;
+        inicio = null;
     }
 
     public Estado getInicio() {
@@ -21,16 +25,23 @@ public class Lista {
 
     public void inserirEstado(String info) {
         Estado est = new Estado(info, null, null);
-        Estado aux = this.inicio;
+        Estado aux = inicio, ant = aux;
+        boolean bool = true;
 
         if (aux == null) {
             inicio = est;
         } else {
-            while (aux.getProx() != null) {
+            while (aux != null) {
+                if (aux.getNome().equals(info)) {
+                    bool = false;
+                }
+                ant = aux;
                 aux = aux.getProx();
             }
 
-            aux.setProx(est);
+            if (bool) {
+                ant.setProx(est);
+            }
         }
     }
 
@@ -41,14 +52,16 @@ public class Lista {
         while (aux != null) {
             System.out.println(aux.getNome());
 
-            sub = aux.getCid();
-            if (sub != null) {
-                System.out.print("\t* ");
-                while (sub.getProx() != null) {
-                    System.out.printf("%s -> ", sub.getNome());
-                    sub = sub.getProx();
+            if (aux.getListaCid() != null) {
+                sub = aux.getListaCid().getInicio();
+                if (sub != null) {
+                    System.out.print("\t* ");
+                    while (sub.getProx() != null) {
+                        System.out.printf("%s -> ", sub.getNome());
+                        sub = sub.getProx();
+                    }
+                    System.out.println(sub.getNome());
                 }
-                System.out.println(sub.getNome());
             }
 
             aux = aux.getProx();
@@ -56,36 +69,20 @@ public class Lista {
         System.out.println();
     }
 
-    public void inserirCidade(String alvo, String info) {
-        Estado est = this.inicio;
-        Cidade cidade = new Cidade(null, null, info);
-        Cidade cid;
-
-        while (est != null && !est.getNome().equals(alvo)) {
-            est = est.getProx();
-        }
-
-        if (est != null) {
-            cid = est.getCid();
-
-            if (cid != null) {
-                while (cid.getProx() != null) {
-                    cid = cid.getProx();
-                }
-
-                cid.setProx(cidade);
-            } else {
-                est.setCid(cidade);
-            }
-
-        }
-    }
-
     //Seu algoritmo deverá ser capaz de resolver as seguintes operações:
     // a. Inserir os pares Estado,Cidade ao final das listas (tipo Fila)!;
     public void inserirEstadoCidade(String estado, String cidade) {
         inserirEstado(estado);
-        inserirCidade(estado, cidade);
+        Estado est = buscaEstado(estado);
+
+        ListaCidade listaCid;
+        if (est.getListaCid() == null) {
+            listaCid = new ListaCidade(null);
+            listaCid.inserirCidade(cidade);
+            est.setListaCid(listaCid);
+        } else {
+            est.getListaCid().inserirCidade(cidade);
+        }
     }
 
     //Ordenar as Listas de Estado e as listas de Cidades;
@@ -93,7 +90,7 @@ public class Lista {
         Estado at;
         Estado ant;
         String str;
-        Cidade aux;
+        ListaCidade aux;
         boolean flag = true;
 
         while (flag) {
@@ -105,38 +102,14 @@ public class Lista {
 
                 if (at.getNome().compareToIgnoreCase(ant.getNome()) < 0) {
                     str = at.getNome();
-                    aux = at.getCid();
+                    aux = at.getListaCid();
 
                     at.setNome(ant.getNome());
-                    at.setCid(ant.getCid());
+                    at.setListaCid(ant.getListaCid());
 
                     ant.setNome(str);
-                    ant.setCid(aux);
+                    ant.setListaCid(aux);
 
-                    flag = true;
-                }
-            }
-        }
-    }
-
-    public void ordenarCidade(Estado no) {
-        Cidade cid = no.getCid();
-        Cidade at, ant;
-        String str;
-        boolean flag = true;
-
-        while(flag) {
-            at = cid;
-            flag = false;
-
-            while (at.getProx() != null) {
-                ant = at;
-                at = at.getProx();
-
-                if(at.getNome().compareToIgnoreCase(ant.getNome()) < 0) {
-                    str = at.getNome();
-                    at.setNome(ant.getNome());
-                    ant.setNome(str);
                     flag = true;
                 }
             }
@@ -144,10 +117,14 @@ public class Lista {
     }
 
     public void ordenarCidades() {
-        Estado aux = this.inicio;
+        Estado aux = inicio;
+        ListaCidade lista;
 
         while (aux != null) {
-            ordenarCidade(aux);
+            lista = aux.getListaCid();
+            if (lista != null) {
+                lista.ordenarCidade();
+            }
             aux = aux.getProx();
         }
     }
@@ -164,19 +141,9 @@ public class Lista {
         return aux;
     }
 
-    public Cidade buscaCidade(Estado est, String cidade) {
-        Cidade cid = est.getCid();
-
-        while (cid != null && !cid.getNome().equals(cidade)) {
-            cid = cid.getProx();
-        }
-
-        return cid;
-    }
-
     //Listar todas as Cidades de um determinado Estado;
     public void listarCidades(Estado no) {
-        Cidade cid = no.getCid();
+        Cidade cid = no.getListaCid().getInicio();
 
         System.out.println("Cidades em " + no.getNome());
         if (cid != null) {
@@ -192,7 +159,13 @@ public class Lista {
     //Verificar se um par Estado,Cidade está inserido nas Listas, retornando
     //  um boolean (True/False).
     public boolean verifica(String est, String cidade) {
-        return buscaCidade(buscaEstado(est), cidade) != null;
+        Estado aux = buscaEstado(est);
+        ListaCidade listaCid;
+        if (aux != null) {
+            listaCid = aux.getListaCid();
+            return listaCid.buscaCidade(cidade) != null;
+        }
+        return false;
     }
 
 }
