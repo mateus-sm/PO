@@ -1,4 +1,4 @@
-package org.example.listaDeLista;
+package org.example.primeiroBim.lista.listaDeLista;
 
 public class ListaCidade {
     private Cidade inicio;

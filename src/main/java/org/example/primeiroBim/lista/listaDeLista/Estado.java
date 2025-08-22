@@ -1,4 +1,4 @@
-package org.example.listaDeLista;
+package org.example.primeiroBim.lista.listaDeLista;
 
 public class Estado {
     private String nome;

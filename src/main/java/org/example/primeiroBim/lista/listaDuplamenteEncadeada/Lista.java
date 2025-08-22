@@ -1,4 +1,4 @@
-package org.example.listaDuplamenteEncadeada;
+package org.example.primeiroBim.lista.listaDuplamenteEncadeada;
 
 public class Lista {
     private No inicio;
