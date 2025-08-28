@@ -3,19 +3,16 @@ package org.example.primeiroBim.lista.listaDeLista;
 public class Main {
     public static void main(String[] args) {
         ListaEstado l = new ListaEstado();
-        ListaCidade listaCid;
 
         l.inserirEstado("São Paulo");
         l.inserirEstadoCidade("São Paulo", "Pres. Pudente");
-        listaCid = l.buscaEstado("São Paulo").getListaCid();
-        listaCid.inserirCidade("Marília");
-        listaCid.inserirCidade("Assis");
+        l.inserirEstadoCidade("São Paulo", "Marília");
+        l.inserirEstadoCidade("São Paulo", "Pres. Assis");
 
         l.inserirEstadoCidade("Paraná", "Maringá");
-        listaCid = l.buscaEstado("Paraná").getListaCid();
-        listaCid.inserirCidade("Apucarana");
-        listaCid.inserirCidade("Londrina");
-        listaCid.inserirCidade("Arapongas");
+        l.inserirEstadoCidade("Paraná", "Apucarana");
+        l.inserirEstadoCidade("Paraná", "Londrina");
+        l.inserirEstadoCidade("Paraná", "Arapongas");
 
         l.inserirEstadoCidade("Santa Catarina", "Joinville");
         l.buscaEstado("Santa Catarina").getListaCid().inserirCidade("Blumenal");
