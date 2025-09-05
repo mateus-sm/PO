@@ -2,7 +2,7 @@ package org.example.primeiroBim.ordenacao.insercaoBinaria;
 
 public class BinarySort {
     public static void main(String[] args) {
-        int[] vet = {9, 8, 4, 5, 1, 3};
+        int[] vet = {2, 4, 9, 7 , 5};
 
         insercaoBinaria(vet);
         for(int i : vet) {
@@ -18,8 +18,9 @@ public class BinarySort {
             aux = vet[i];
             pos = buscaBinaria(vet, i);
 
-            for (int j = i; j > pos; j--) {
-                vet[j] = vet[j - 1];
+            while (i > pos) {
+                vet[i] = vet[i - 1];
+                i--;
             }
 
             vet[pos] = aux;
@@ -40,8 +41,8 @@ public class BinarySort {
             meio = (inicio + fim) / 2;
         }
 
-        if (aux > vet[meio]) {
-            return meio + 1;
+        if (vet[TL] > vet[TL - 1]) {
+            return TL;
         }
         return meio;
     }
