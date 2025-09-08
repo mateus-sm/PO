@@ -2,7 +2,7 @@ package org.example.primeiroBim.ordenacao.insercaoDireta;
 
 public class InsertionSort {
     public static void main(String[] args) {
-        int[] vet = {2, 4, 9, 7 , 5};
+        int[] vet = {2, 4, 9, 7, 5};
 
         insercaoDireta(vet);
         for(int i : vet) {
